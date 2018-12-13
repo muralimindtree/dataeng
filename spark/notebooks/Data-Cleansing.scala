@@ -103,12 +103,19 @@ display(cleanedBusinessDF)
 
 // COMMAND ----------
 
+//clean up the inspections - remove all records that do not have a score
+val cleanedInspectionsDF = spark.sql("""
+   SELECT business_id, Score, inspections_date, type FROM inspection WHERE Score is not null
+""")
+
+// COMMAND ----------
+
 //write the cleaned files
 val cleanedBusinessFile = "dbfs:/mnt/dataingestiondemo/data/cleansed/businesses.csv"
 cleanedBusinessDF.write.format("csv").option("header", "true").option("delimiter", ",").mode("overwrite").save(cleanedBusinessFile)
 
 val cleanedInspectionsFile = "dbfs:/mnt/dataingestiondemo/data/cleansed/inspections.csv"
-inspectionDF.write.format("csv").option("header", "true").option("delimiter", ",").mode("overwrite").save(cleanedInspectionsFile)
+cleanedInspectionsDF.write.format("csv").option("header", "true").option("delimiter", ",").mode("overwrite").save(cleanedInspectionsFile)
 
 val cleanedViolationsFile = "dbfs:/mnt/dataingestiondemo/data/cleansed/violations.csv"
 violationDF.write.format("csv").option("header", "true").option("delimiter", ",").mode("overwrite").save(cleanedViolationsFile)
