@@ -15,7 +15,7 @@ businessDF.createOrReplaceTempView("business")
 inspectionDF.createOrReplaceTempView("inspection")
 violationDF.createOrReplaceTempView("violation")
 
-display(inspectionDF)
+display(businessDF)
 
 // COMMAND ----------
 
