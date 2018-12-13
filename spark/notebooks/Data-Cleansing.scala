@@ -15,7 +15,7 @@ businessDF.createOrReplaceTempView("business")
 inspectionDF.createOrReplaceTempView("inspection")
 violationDF.createOrReplaceTempView("violation")
 
-display(violationDF)
+display(inspectionDF)
 
 // COMMAND ----------
 
@@ -119,3 +119,8 @@ cleanedInspectionsDF.write.format("csv").option("header", "true").option("delimi
 
 val cleanedViolationsFile = "dbfs:/mnt/dataingestiondemo/data/cleansed/violations.csv"
 violationDF.write.format("csv").option("header", "true").option("delimiter", ",").mode("overwrite").save(cleanedViolationsFile)
+
+// COMMAND ----------
+
+// MAGIC %sql
+// MAGIC select distinct(type) from inspection
